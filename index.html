@@ -34,7 +34,11 @@
     .belt{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     @media(min-width:720px){.belt{grid-template-columns:repeat(6,1fr)}}
     .logo{height:44px;display:grid;place-items:center;border:2px dashed var(--line2);border-radius:12px;background:#fff;padding:6px}
-    .logo img{max-height:44px;max-width:120px;object-fit:contain;opacity:.8}
+    .logo img{max-height:44px;max-width:120px;object-fit:contain;opacity:.8;display:block}
+    .logo:hover img{opacity:1} /* subtle hover indicator */
+    /* Per‑logo tweaks to address sizing/centering without changing layout */
+    .logo--secure-networks img{max-height:40px} /* 3rd logo was a bit large */
+    .logo--xanalytics img,.logo--exertis img{display:block;margin:0 auto} /* ensure clean centering */
     .split{display:grid;gap:12px}
     @media(min-width:900px){.split{grid-template-columns:1fr 1fr}}
     .cards{display:grid;gap:12px}
@@ -63,14 +67,15 @@
   <header>
     <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
       <a href="https://www.thecomplianceaide.com/" style="display:flex;align-items:center;gap:10px;text-decoration:none">
-        <img src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755361327727x594471496605056800/ComplianceAide_WHITE_AND_BLACK.png?_gl=1*17rvfu8*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGcxJHQxNzU1MzYxMjQyJGo1NiRsMCRoMA.." style="height:60px;width:auto;border:none;border-radius:8px;">
+        <!-- UPDATED: color logo -->
+        <img
+          src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755645414226x745256611565246800/ComplianceAide.png?_gl=1*1fp2wbk*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTU2NDUyOTkkbzI5JGcxJHQxNzU1NjQ1MzI2JGozMyRsMCRoMA.."
+          alt="ComplianceAide logo (color)"
+          style="height:60px;width:auto;border:none;border-radius:8px;">
       </a>
-<!-- Original navigation menu removed to avoid duplicate links -->
       <div class="row" style="display:flex;gap:12px;align-items:center;">
         <a class="btn primary" href="https://www.thecomplianceaide.com/accessrequest_original">7 Day Trial</a>
-        <div class="right-links" style="margin-left:auto;display:flex;gap:12px;">
-          <a class="btn" href="https://thecomplianceaide.ghost.io/">Content</a>
-        </div>
+        <!-- REMOVED: Content button per request -->
       </div>
     </div>
   </header>
@@ -80,7 +85,8 @@
     <div class="grid hero-grid">
       <div>
         <span class="badge">Agentic • API integration • MCP • 350+ frameworks</span>
-        <h1>Agentic compliance. Audit-ready in hours.</h1>
+        <!-- UPDATED H1 -->
+        <h1>Agentic compliance remediation. Audit-ready in hours.</h1>
         <p class="muted" style="max-width:720px">
           Auto-map evidence and policies across <strong>350+ frameworks</strong> with <strong>API integration</strong> and <strong>MCP</strong>—turning audits into a push-button process.
         </p>
@@ -93,12 +99,6 @@
 
       <!-- HERO VISUAL (placeholder + commented embed) -->
       <div class="hero-visual">
-        <!--
-        <div>
-          <strong>VEO-3 Background Video / Hero Visual</strong><br/>
-          <small>Paste your looped MP4/WebM (muted, playsinline, loop) + poster below.</small>
-        </div>
-        -->
         <video autoplay muted playsinline loop preload="metadata" controls style="position:absolute; inset:0; width:100%; height:100%; border-radius:12px; object-fit:cover; z-index:10;">
           <source src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755360057716x867594545222409900/8_25_landing_HERO.mp4?_gl=1*nmr2d5*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGcxJHQxNzU1MzYwMDIyJGoxNSRsMCRoMA.." type="video/mp4">
         </video>
@@ -111,13 +111,26 @@
     <div class="band" style="padding:16px">
       <div class="muted" style="margin-bottom:8px">Trusted by MSPs and security teams worldwide</div>
       <div class="belt">
-        <!-- TODO: replace each placeholder with your logo URL from Bubble File manager -->
-        <div class="logo"><img alt="ConnectWise" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364390655x277602133537194080/connectwise_logo_white.png?_gl=1*1ygvju5*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0Mzc1JGo1MSRsMCRoMA.."></div>
-        <div class="logo"><img alt="Acronis" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364427021x206921354721908640/acronis_logo_white.png?_gl=1*1ygvju5*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0Mzc1JGo1MSRsMCRoMA.."></div>
-        <div class="logo"><img alt="Secure Network Technologies" src="https://sntstg.wpengine.com/wp-content/uploads/sites/2/2021/09/secure-network-technologies.png"></div>
-        <div class="logo"><img alt="n_able" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364483848x467956580309685250/n_able_logo_white.png?_gl=1*1exddec*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NDY0JGo0MCRsMCRoMA.."></div>
-        <div class="logo"><img alt="ChatGPT 1" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364745179x720903555942974800/ChatGPT%20Image%20Aug%2016%2C%202025%2C%2001_15_51%20PM.png?_gl=1*1ka1xso*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NzM3JGo1NyRsMCRoMA.."></div>
-        <div class="logo"><img alt="ChatGPT 2" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364750605x835358825380671600/ChatGPT%20Image%20Aug%2016%2C%202025%2C%2001_18_45%20PM.png?_gl=1*1ka1xso*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NzM3JGo1NyRsMCRoMA.."></div>
+        <!-- Add title tooltips and minor size/centering tweaks -->
+        <div class="logo" title="ConnectWise">
+          <img alt="ConnectWise" title="ConnectWise" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364390655x277602133537194080/connectwise_logo_white.png?_gl=1*1ygvju5*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0Mzc1JGo1MSRsMCRoMA..">
+        </div>
+        <div class="logo" title="Acronis">
+          <img alt="Acronis" title="Acronis" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364427021x206921354721908640/acronis_logo_white.png?_gl=1*1ygvju5*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0Mzc1JGo1MSRsMCRoMA..">
+        </div>
+        <div class="logo logo--secure-networks" title="Secure Network Technologies">
+          <img alt="Secure Network Technologies" title="Secure Network Technologies" src="https://sntstg.wpengine.com/wp-content/uploads/sites/2/2021/09/secure-network-technologies.png">
+        </div>
+        <div class="logo" title="N-able">
+          <img alt="n_able" title="N-able" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364483848x467956580309685250/n_able_logo_white.png?_gl=1*1exddec*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NDY0JGo0MCRsMCRoMA..">
+        </div>
+        <!-- If/when you swap to X‑Analytics and Exertis, keep these classes for centering -->
+        <div class="logo logo--xanalytics" title="X‑Analytics">
+          <img alt="X‑Analytics (placeholder)" title="X‑Analytics" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364745179x720903555942974800/ChatGPT%20Image%20Aug%2016%2C%202025%2C%2001_15_51%20PM.png?_gl=1*1ka1xso*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NzM3JGo1NyRsMCRoMA..">
+        </div>
+        <div class="logo logo--exertis" title="Exertis">
+          <img alt="Exertis (placeholder)" title="Exertis" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364750605x835358825380671600/ChatGPT%20Image%20Aug%2016%2C%202025%2C%2001_18_45%20PM.png?_gl=1*1ka1xso*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NzM3JGo1NyRsMCRoMA..">
+        </div>
       </div>
     </div>
   </section>
@@ -138,7 +151,6 @@
   <section class="wrap mt-6" id="features">
     <div class="cards">
       <div class="card">
-        <!-- TODO: replace .icon with <img src="https://YOUR-BUBBLE-FILE/icon-evidence.svg" alt="Evidence"/> -->
         <img class="icon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield-check.svg" alt="Agentic evidence collection icon"/>
         <h3 class="mb-1">Agentic evidence collection</h3>
         <p class="muted">Immutable timestamps; normalized proof from your stack.</p>
@@ -177,7 +189,8 @@
     <h2>What security leaders say</h2>
     <div class="cards" style="margin-top:10px">
       <figure class="card">
-        <blockquote>“Prep time dropped <strong>70%</strong>. Evidence and policies align themselves.”</blockquote>
+        <!-- UPDATED Joe’s change #2 -->
+        <blockquote>“Prep time dropped by 90% Evidence and policies align themselves.”</blockquote>
         <figcaption class="muted" style="font-size:13px;margin-top:6px">Keith G., vCISO</figcaption>
       </figure>
       <figure class="card">
@@ -198,7 +211,6 @@
         <strong>60-second product overview</strong><br/>
         <span class="muted" style="font-size:13px">Embed YouTube/Vimeo or HTML5 (lazy-load).</span>
       </div>
-      <!-- TODO: replace the link with your final video (works now as channel link) -->
       <div class="mt-3">
         <iframe
           src="https://www.youtube.com/embed/knu34hXmpv8?rel=0"
@@ -209,12 +221,6 @@
           style="width:100%;max-width:900px;aspect-ratio:16/9;border-radius:12px;">
         </iframe>
       </div>
-      <!-- Or embed directly:
-      <video controls preload="none" poster="https://YOUR-BUBBLE-FILE/overview-poster.webp" style="width:100%;max-width:900px;border-radius:12px;margin-top:12px">
-        <source src="https://YOUR-BUBBLE-FILE/overview.mp4" type="video/mp4">
-        <source src="https://YOUR-BUBBLE-FILE/overview.webm" type="video/webm">
-      </video>
-      -->
     </div>
   </section>
 
@@ -263,7 +269,8 @@
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
     if (window.matchMedia('(min-width: 800px)').matches) {
-      document.getElementById('nav').style.display = 'flex';
+      var el = document.getElementById('nav');
+      if (el) el.style.display = 'flex';
     }
   </script>
 </body>
