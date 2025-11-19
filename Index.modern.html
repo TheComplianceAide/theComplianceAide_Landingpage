@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ComplianceAide — Agentic Compliance</title>
+  <meta name="description" content="Agentic compliance platform that auto-maps evidence and policies across 350+ frameworks with API integration and MCP."/>
+  <style>
+    :root{
+      --bg:#f7fafc; --ink:#0f172a; --muted:#475569;
+      --panel:#ffffff; --line:#e5e7eb; --line2:#d1d5db; --accent:#111827;
+      --emerald:#0ea5a6; --emerald-soft:#ecfeff;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+    .band{background:var(--panel);border:2px dashed var(--line2);border-radius:16px}
+    header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    nav a{color:#64748b;text-decoration:none}
+    nav a:hover{color:#0f172a}
+    h1{font-size:42px;line-height:1.1;margin:0 0 8px;font-weight:900}
+    h2{font-size:28px;margin:0 0 10px;font-weight:900}
+    h3{font-size:20px;margin:0 0 6px;font-weight:900}
+    .muted{color:var(--muted)}
+    .badge{display:inline-block;margin-top:6px;padding:6px 10px;border:1px dashed var(--line2);border-radius:999px;color:#0b3b3c;background:var(--emerald-soft);font-size:12px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:12px 18px;border-radius:14px;font-weight:800;border:2px dashed var(--line2);text-decoration:none;background:#fff}
+    .btn.primary{background:#06b6d4;color:#04212a;border-color:#06b6d4}
+    .grid{display:grid;gap:18px}
+    .hero{padding:36px 24px}
+    @media(min-width:960px){.hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center}}
+    .hero-visual{min-height:320px;border-radius:16px;background:#000;border:none;position:relative;overflow:hidden;}
+    .belt{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(min-width:720px){.belt{grid-template-columns:repeat(6,1fr)}}
+    .logo{height:44px;display:grid;place-items:center;border:2px dashed var(--line2);border-radius:12px;background:#fff;padding:6px}
+    .logo img{max-height:44px;max-width:120px;object-fit:contain;opacity:.8;display:block}
+    .logo:hover img{opacity:1} /* subtle hover indicator */
+    /* Per‑logo tweaks to address sizing/centering without changing layout */
+    .logo--secure-networks img{max-height:40px} /* 3rd logo was a bit large */
+    .logo--xanalytics img,.logo--exertis img{display:block;margin:0 auto} /* ensure clean centering */
+    .split{display:grid;gap:12px}
+    @media(min-width:900px){.split{grid-template-columns:1fr 1fr}}
+    .cards{display:grid;gap:12px}
+    @media(min-width:900px){.cards{grid-template-columns:repeat(3,1fr)}}
+    .card{background:#fff;border:2px dashed var(--line2);border-radius:14px;padding:18px}
+    .icon{height:32px;width:32px;border:2px dashed var(--line2);border-radius:8px;margin-bottom:8px}
+    .pills{display:flex;flex-wrap:wrap;gap:8px}
+    .pill{border:2px dashed var(--line2);background:#fff;color:#1f2937;border-radius:999px;padding:8px 12px;font-size:13px}
+    .pill.hi{background:#ecfeff;border-color:#bae6fd}
+    footer{color:#64748b}
+    .mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-5{margin-top:20px}.mt-6{margin-top:24px}
+    .sr{position:absolute;left:-9999px}
+    @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+  /* HOW-IT-WORKS: subtle tints + accent bar */
+  #how .card{position:relative;background:linear-gradient(180deg,#fff,rgba(6,182,212,.04));border-color:#cae9ee}
+  #how .card:nth-child(2){background:linear-gradient(180deg,#fff,rgba(6,182,212,.07));border-color:#bfe4ea}
+  #how .card:nth-child(3){background:linear-gradient(180deg,#fff,rgba(6,182,212,.10));border-color:#b3dee5}
+  #how .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;border-top-left-radius:12px;border-top-right-radius:12px;
+    background:linear-gradient(90deg,#06b6d4,#0ea5a6);opacity:.35}
+  #how .card:hover{box-shadow:0 6px 14px rgba(2,132,199,.08);transform:translateY(-1px);transition:box-shadow .25s,transform .25s}
+  </style>
+  <!-- Modernized brand-aligned overrides -->
+  <style id="modern-styles">
+    :root{
+      --bg:#FFFFFF; --surface:#F8FAFF; --panel:#FFFFFF;
+      --ink:#0F172A; --muted:#475569; --hairline:#E6EAF5;
+      --purple:#8B5CF6; --indigo:#4F46E5; --sky:#60A5FA;
+      --radius:12px; --radius-lg:14px;
+      --shadow-1:0 6px 14px rgba(2,6,23,.06);
+      --shadow-2:0 10px 24px rgba(2,6,23,.08);
+      --space:clamp(16px,4vw,32px);
+    }
+
+    /* Base */
+    html,body{background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    h1{font-weight:800;line-height:1.12;margin:0 0 10px;font-size:clamp(32px,6vw,56px);letter-spacing:-0.01em}
+    h2{font-weight:800;line-height:1.2;margin:0 0 8px;font-size:clamp(24px,3vw,32px);letter-spacing:-0.01em}
+    h3{font-weight:700;line-height:1.25;margin:0 0 6px;font-size:clamp(18px,2.2vw,20px)}
+    .muted{color:var(--muted)}
+
+    /* Layout */
+    .wrap{max-width:1200px;margin:0 auto;padding:0 var(--space)}
+    .grid{display:grid;gap:18px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .split{display:grid;gap:12px}
+    @media(min-width:900px){.split{grid-template-columns:1fr 1fr}}
+
+    /* Header */
+    header{background:rgba(255,255,255,.98);border-bottom:1px solid var(--hairline);backdrop-filter:none}
+    nav a{color:var(--muted)}
+    nav a:hover{color:var(--indigo)}
+
+    /* Bands & panels */
+    .band{background:var(--panel);border:1px solid var(--hairline);border-radius:var(--radius-lg)}
+
+    /* Hero */
+    .hero{padding:clamp(24px,5vw,56px);position:relative;overflow:hidden}
+    @media(min-width:960px){.hero-grid{grid-template-columns:1.15fr .85fr;align-items:center}}
+    .hero::before,.hero::after{content:"";position:absolute;border-radius:9999px;filter:blur(40px);pointer-events:none}
+    .hero::before{width:380px;height:380px;right:-120px;top:-120px;background:radial-gradient(closest-side,rgba(139,92,246,.15),transparent)}
+    .hero::after{width:320px;height:320px;left:-120px;bottom:-140px;background:radial-gradient(closest-side,rgba(79,70,229,.12),transparent)}
+    .hero h1{color:var(--indigo);background:linear-gradient(90deg,var(--purple),var(--indigo));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+
+    /* Visual */
+    .hero-visual{min-height:0;border-radius:var(--radius-lg);background:#0B1220;border:1px solid var(--hairline);position:relative;overflow:hidden;box-shadow:var(--shadow-1);width:100%;}
+    @media(max-width:959px){.hero-visual{aspect-ratio:9/16;min-height:auto;max-width:100%}}
+    @media(min-width:960px){.hero-visual{aspect-ratio:16/9;width:clamp(360px,36vw,520px);max-width:100%;margin-inline:auto}}
+    .hero-visual video{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;object-fit:contain;background:#0B1220}
+    @media(min-width:960px){.hero-visual video{object-fit:contain}}
+
+    /* Logos belt */
+    .belt{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(min-width:720px){.belt{grid-template-columns:repeat(6,1fr)}}
+    .logo{height:44px;display:grid;place-items:center;border:1px solid var(--hairline);border-radius:10px;background:#fff;padding:6px}
+    .logo img{max-height:44px;max-width:120px;object-fit:contain;opacity:.85}
+    .logo:hover img{opacity:1}
+
+    /* Cards */
+    .cards{display:grid;gap:12px}
+    @media(min-width:900px){.cards{grid-template-columns:repeat(3,1fr)}}
+    .card{position:relative;background:#fff;border:1px solid var(--hairline);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-1);transition:transform .18s ease, box-shadow .18s ease}
+    .card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;border-top-left-radius:var(--radius);border-top-right-radius:var(--radius);background:linear-gradient(90deg,var(--purple),var(--indigo));opacity:.45}
+    .card:hover{transform:translateY(-1px);box-shadow:var(--shadow-2)}
+    .icon{height:32px;width:32px;border-radius:8px;margin-bottom:8px;border:1px solid var(--hairline);padding:4px;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,var(--purple),var(--indigo)) border-box}
+
+    /* Pills */
+    .pills{display:flex;flex-wrap:wrap;gap:8px}
+    .pill{border-radius:999px;padding:8px 12px;font-size:13px;border:1px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,var(--purple),var(--indigo)) border-box;color:#1f2937}
+    .pill.hi{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,var(--indigo),var(--purple)) border-box}
+
+    /* Buttons */
+    .btn{display:inline-block;padding:12px 18px;border-radius:10px;font-weight:800;border:1px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,var(--purple),var(--indigo)) border-box;color:var(--ink);transition:transform .18s ease, box-shadow .18s ease, background .18s ease}
+    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-1)}
+    .btn:active{transform:translateY(0)}
+    .btn.primary{background:linear-gradient(90deg,var(--purple),var(--indigo));color:#fff;border-color:transparent;box-shadow:0 6px 14px rgba(99,102,241,.25)}
+    .btn.primary:hover{box-shadow:0 10px 24px rgba(79,70,229,.28)}
+
+    /* Badge */
+    .badge{border:1px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,var(--purple),var(--indigo)) border-box;color:var(--indigo)}
+
+    /* Section tweaks */
+    #how .card, #how .card:nth-child(2), #how .card:nth-child(3){background:#fff;border-color:var(--hairline)}
+
+    /* Footer */
+    footer{color:#64748b}
+
+    /* Motion & accessibility */
+    :where(a,button,[role="button"]):focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:10px}
+    @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+    @media (prefers-contrast: more){.hero h1{-webkit-background-clip:initial;background-clip:initial;color:var(--indigo)}}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / NAV (light) -->
+  <header>
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
+      <a href="https://www.thecomplianceaide.com/" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <!-- UPDATED: color logo -->
+        <img
+          src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755645414226x745256611565246800/ComplianceAide.png?_gl=1*1fp2wbk*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTU2NDUyOTkkbzI5JGcxJHQxNzU1NjQ1MzI2JGozMyRsMCRoMA.."
+          alt="ComplianceAide logo (color)"
+          style="height:60px;width:auto;border:none;border-radius:8px;">
+      </a>
+      <div class="row" style="display:flex;gap:12px;align-items:center;">
+        <a class="btn primary" href="https://www.thecomplianceaide.com/accessrequest_original">7 Day Trial</a>
+        <!-- REMOVED: Content button per request -->
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO (light, two-column, right visual panel) -->
+  <section class="wrap band hero" aria-label="Agentic compliance hero" style="margin-top:16px">
+    <div class="grid hero-grid">
+      <div>
+        <span class="badge">Agentic • API integration • MCP • 350+ frameworks</span>
+        <!-- UPDATED H1 -->
+        <h1>Agentic compliance remediation. Audit-ready in hours.</h1>
+        <p class="muted" style="max-width:720px">
+          Auto-map evidence and policies across <strong>350+ frameworks</strong> with <strong>API integration</strong> and <strong>MCP</strong>—turning audits into a push-button process.
+        </p>
+        <div class="row mt-3">
+          <a class="btn primary" href="https://outlook.office365.com/book/TheComplianceAidecomDemoRequest@thecomplianceaide.com/?ismsaljsauthenabled=true" target="_blank" rel="noopener noreferrer">Book a 15-min demo</a>
+          <!-- Updated to direct 2‑minute overview video -->
+          <a class="btn" href="https://youtu.be/knu34hXmpv8?si=Vtzfrg9cb9ABYjhW" target="_blank" rel="noopener noreferrer">Watch 2‑min overview</a>
+        </div>
+      </div>
+
+      <!-- HERO VISUAL (placeholder + commented embed) -->
+      <div class="hero-visual">
+        <video autoplay muted playsinline loop preload="metadata" controls style="position:absolute; inset:0; width:100%; height:100%; border-radius:12px; z-index:10;">
+          <source src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1761858222026x641838712507266400/20251030_1703_01k8ven23bf1g8z9vjtpxn6jnd.mp4?_gl=1*9ub2k4*_gcl_au*MTkyNTA3OTgxNy4xNzU1MDk1MTE2*_ga*OTY1NzU2MzQzLjE3NTQ3ODM1MTE.*_ga_BFPVR2DEE2*czE3NjE4NTQyNDUkbzI0JGcxJHQxNzYxODU2NzM1JGozOSRsMCRoMA.." type="video/mp4">
+          </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BELT (logos) -->
+  <section class="wrap mt-6">
+    <div class="band" style="padding:16px">
+      <div class="muted" style="margin-bottom:8px">Trusted by MSPs and security teams worldwide</div>
+      <div class="belt">
+        <!-- Add title tooltips and minor size/centering tweaks -->
+        <div class="logo" title="ConnectWise">
+          <img alt="ConnectWise" title="ConnectWise" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364390655x277602133537194080/connectwise_logo_white.png?_gl=1*1ygvju5*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0Mzc1JGo1MSRsMCRoMA..">
+        </div>
+        <div class="logo" title="Acronis">
+          <img alt="Acronis" title="Acronis" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364427021x206921354721908640/acronis_logo_white.png?_gl=1*1ygvju5*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0Mzc1JGo1MSRsMCRoMA..">
+        </div>
+        <div class="logo logo--secure-networks" title="Secure Network Technologies">
+          <img alt="Secure Network Technologies" title="Secure Network Technologies" src="https://sntstg.wpengine.com/wp-content/uploads/sites/2/2021/09/secure-network-technologies.png">
+        </div>
+        <div class="logo" title="N-able">
+          <img alt="n_able" title="N-able" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364483848x467956580309685250/n_able_logo_white.png?_gl=1*1exddec*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NDY0JGo0MCRsMCRoMA..">
+        </div>
+        <!-- If/when you swap to X‑Analytics and Exertis, keep these classes for centering -->
+        <div class="logo logo--xanalytics" title="X‑Analytics">
+          <img alt="X‑Analytics (placeholder)" title="X‑Analytics" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364745179x720903555942974800/ChatGPT%20Image%20Aug%2016%2C%202025%2C%2001_15_51%20PM.png?_gl=1*1ka1xso*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NzM3JGo1NyRsMCRoMA..">
+        </div>
+        <div class="logo logo--exertis" title="Exertis">
+          <img alt="Exertis (placeholder)" title="Exertis" src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755364750605x835358825380671600/ChatGPT%20Image%20Aug%2016%2C%202025%2C%2001_18_45%20PM.png?_gl=1*1ka1xso*_gcl_au*MTM4OTQ2MTAyNC4xNzUwNjk2NzU3*_ga*MTI5Mzg5MTYzNS4xNzQyMDY5NDgy*_ga_BFPVR2DEE2*czE3NTUzNTc0MTMkbzI2JGgxJHQxNzU1MzY0NzM3JGo1NyRsMCRoMA..">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM → OUTCOME -->
+  <section class="wrap split mt-6" id="problem-outcome">
+    <div class="band" style="padding:18px">
+      <h3 class="mb-1">Problem</h3>
+      <p class="muted">Manual evidence, scattered policies, missed renewals—time sinks that stall deals.</p>
+    </div>
+    <div class="band" style="padding:18px">
+      <h3 class="mb-1">Outcome</h3>
+      <p class="muted"><strong>Agentic evidence collection</strong>, policy drafts, and one-click exports—continuously aligned to <strong>350+ frameworks</strong>. Works inside your stack via <strong>API</strong> &amp; <strong>MCP</strong>.</p>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID (6 cards) -->
+  <section class="wrap mt-6" id="features">
+    <div class="cards">
+      <div class="card">
+        <img class="icon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield-check.svg" alt="Agentic evidence collection icon"/>
+        <h3 class="mb-1">Agentic evidence collection</h3>
+        <p class="muted">Immutable timestamps; normalized proof from your stack.</p>
+      </div>
+      <div class="card"><img class="icon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/file-text.svg" alt="Policy generation icon"/><h3 class="mb-1">Policy generation</h3><p class="muted">Mapped to controls across <strong>350+ frameworks</strong>.</p></div>
+      <div class="card"><img class="icon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/trending-up.svg" alt="Gap &amp; maturity scoring icon"/><h3 class="mb-1">Gap &amp; maturity scoring</h3><p class="muted">Human-readable rationales and priorities.</p></div>
+      <div class="card"><img class="icon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/workflow.svg" alt="API integration &amp; MCP icon"/><h3 class="mb-1">API integration &amp; MCP</h3><p class="muted">Bring TCA into your workflows and AI tools.</p></div>
+      <div class="card"><img class="icon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/list-checks.svg" alt="Vendor questionnaires icon"/><h3 class="mb-1">Vendor questionnaires</h3><p class="muted">Reusable responses and a shareable trust portal.</p></div>
+      <div class="card"><img class="icon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/bar-chart-3.svg" alt="Executive reporting icon"/><h3 class="mb-1">Executive reporting</h3><p class="muted">Board-ready summaries and one-click exports.</p></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="wrap mt-6" id="how">
+    <div class="cards">
+      <div class="card"><div class="muted" style="font-size:12px">Step 1</div><h3 class="mb-1">Connect &amp; discover</h3><p class="muted">Onboarding docs + integrations via <strong>API</strong> &amp; <strong>MCP</strong>.</p></div>
+      <div class="card"><div class="muted" style="font-size:12px">Step 2</div><h3 class="mb-1">Agentic analysis</h3><p class="muted">Controls mapped, gaps scored, rationales.</p></div>
+      <div class="card"><div class="muted" style="font-size:12px">Step 3</div><h3 class="mb-1">Remediate &amp; prove</h3><p class="muted">Playbooks, tickets, exports, audit workspace.</p></div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORKS STRIP -->
+  <section class="wrap mt-6" id="frameworks">
+    <div class="band" style="padding:16px">
+      <div class="pills">
+        <span class="pill">NIST CSF 2.0</span><span class="pill">ISO 27001</span><span class="pill">SOC 2</span>
+        <span class="pill">HIPAA</span><span class="pill">PCI DSS</span><span class="pill">GDPR</span>
+        <span class="pill">FedRAMP</span><span class="pill">CMMC</span><span class="pill">NIS2</span><span class="pill">DORA</span>
+        <span class="pill hi">+340 more</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="wrap mt-6" id="testimonials">
+    <h2>What security leaders say</h2>
+    <div class="cards" style="margin-top:10px">
+      <figure class="card">
+        <!-- UPDATED Joe’s change #2 -->
+        <blockquote>“Prep time dropped by 90% Evidence and policies align themselves.”</blockquote>
+        <figcaption class="muted" style="font-size:13px;margin-top:6px">Keith G., vCISO</figcaption>
+      </figure>
+      <figure class="card">
+        <blockquote>“Agentic mapping across <strong>350+ frameworks</strong>—and I didn’t chase a single screenshot.”</blockquote>
+        <figcaption class="muted" style="font-size:13px;margin-top:6px">Joseph V., CISO</figcaption>
+      </figure>
+      <figure class="card">
+        <blockquote>“Board updates went from slog to push-button.”</blockquote>
+        <figcaption class="muted" style="font-size:13px;margin-top:6px">Josh B., Security Advisor</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 60-SECOND OVERVIEW VIDEO -->
+  <section class="wrap mt-6" id="video">
+    <div class="band" style="padding:16px;display:grid;place-items:center;text-align:center;min-height:220px">
+      <div>
+        <strong>60-second product overview</strong><br/>
+        <span class="muted" style="font-size:13px">Agentic walkthrough</span>
+      </div>
+      <div class="mt-3" style="width:100%;display:flex;justify-content:center">
+        <video
+          controls
+          playsinline
+          muted
+          loop
+          preload="metadata"
+          style="width:100%;max-width:900px;aspect-ratio:16/9;border-radius:12px;border:0;display:block;background:#000">
+          <source src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1763156203658x778658644685050400/theComplianceAideLandingPageRev1.mp4?_gl=1*1w3jzve*_gcl_au*MTc4ODg2MTUxOC4xNzYzMTU0NDAy*_ga*OTY1NzU2MzQzLjE3NTQ3ODM1MTE.*_ga_BFPVR2DEE2*czE3NjMxNTQ0MDIkbzI5JGcxJHQxNzYzMTU2MTYwJGo1OCRsMCRoMA.." type="video/mp4">
+          <p class="muted">Your browser does not support HTML5 video. <a href="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1763156203658x778658644685050400/theComplianceAideLandingPageRev1.mp4?_gl=1*1w3jzve*_gcl_au*MTc4ODg2MTUxOC4xNzYzMTU0NDAy*_ga*OTY1NzU2MzQzLjE3NTQ3ODM1MTE.*_ga_BFPVR2DEE2*czE3NjMxNTQ0MDIkbzI5JGcxJHQxNzYzMTU2MTYwJGo1OCRsMCRoMA.." target="_blank" rel="noopener noreferrer">Download the video</a>.</p>
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="wrap mt-6" id="resources">
+    <div class="cards">
+      <a class="card" href="https://www.youtube.com/@ComplianceAide" style="text-decoration:none">
+        <h3 class="mb-1">Podcast</h3>
+        <p class="muted">Latest episodes &amp; demos.</p>
+      </a>
+      <a class="card" href="https://thecomplianceaide.ghost.io/" style="text-decoration:none">
+        <h3 class="mb-1">Blog</h3>
+        <p class="muted">Guides and updates.</p>
+      </a>
+      <div class="card">
+        <h3 class="mb-1">Whitepaper</h3>
+        <p class="muted">Agentic Compliance: From Evidence to Audit in Hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="wrap mt-6" id="cta">
+    <div class="band" style="padding:20px">
+      <div class="split" style="align-items:center">
+        <div>
+          <h2>Get audit-ready in hours, not quarters.</h2>
+          <p class="muted">Start a 7-day pilot. If we don’t save you measurable time, you pay nothing.</p>
+        </div>
+        <div class="row">
+          <a class="btn primary" href="https://www.thecomplianceaide.com/accessrequest_original">Start pilot</a>
+          <a class="btn" href="https://outlook.office365.com/book/TheComplianceAidecomDemoRequest@thecomplianceaide.com/?ismsaljsauthenabled=true" target="_blank" rel="noopener noreferrer">Talk to an expert</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="wrap" style="margin:28px 0 40px">
+    <div class="split" style="align-items:center">
+      <p>© <span id="y"></span> ComplianceAide</p>
+      <p style="text-align:right" class="muted">Agentic • API integration • MCP • 350+ frameworks</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    if (window.matchMedia('(min-width: 800px)').matches) {
+      var el = document.getElementById('nav');
+      if (el) el.style.display = 'flex';
+    }
+  </script>
+</body>
+</html>

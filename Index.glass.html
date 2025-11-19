@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ComplianceAide — Glass Landing</title>
+  <meta name="description" content="A glassmorphic landing page with ambient background and translucent panels."/>
+  <style>
+    :root{
+      --bg:#0B1220;               /* deep indigo base */
+      --ink:#E6EAF5;              /* high-contrast text */
+      --muted:#A6B0C3;            /* secondary text */
+      --line:rgba(255,255,255,.18);
+      --hairline:rgba(255,255,255,.10);
+      --glassA:rgba(255,255,255,.12);
+      --glassB:rgba(255,255,255,.04);
+      --purple:#8B5CF6; --indigo:#4F46E5; --sky:#60A5FA;
+      --radius:16px; --radius-lg:22px;
+      --shadow-1:0 8px 30px rgba(0,0,0,.25);
+      --shadow-2:0 18px 60px rgba(56, 59, 96, .35);
+      --blur:16px;
+      --space:clamp(16px,4vw,32px);
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    h1{margin:0 0 10px;font-weight:900;line-height:1.05;font-size:clamp(36px,6vw,64px);letter-spacing:-.01em}
+    h2{margin:0 0 8px;font-weight:800;line-height:1.15;font-size:clamp(22px,3vw,32px)}
+    h3{margin:0 0 6px;font-weight:700;font-size:18px}
+    p{margin:0}
+    .muted{color:var(--muted)}
+
+    /* Background FX */
+    body::before, body::after{content:"";position:fixed;inset:auto;z-index:-2;border-radius:9999px;filter:blur(70px);opacity:.45;pointer-events:none}
+    body::before{top:-120px;left:-140px;width:520px;height:520px;background:radial-gradient(closest-side,rgba(139,92,246,.6),transparent)}
+    body::after{bottom:-160px;right:-160px;width:600px;height:600px;background:radial-gradient(closest-side,rgba(79,70,229,.6),transparent)}
+    .grid-bg{position:fixed;inset:0;z-index:-3;background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.35))}
+
+    /* Layout */
+    .wrap{max-width:1200px;margin:0 auto;padding:0 var(--space)}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .grid{display:grid;gap:18px}
+    .split{display:grid;gap:18px}
+    @media(min-width:960px){.split{grid-template-columns:1.1fr .9fr}}
+
+    /* Glass primitives */
+    .glass{background:linear-gradient(135deg,var(--glassA),var(--glassB));border:1px solid var(--line);border-radius:var(--radius-lg);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));box-shadow:var(--shadow-1)}
+    .stroke{border:1px solid var(--hairline)}
+    .keyline{position:relative}
+    .keyline::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;border-top-left-radius:inherit;border-top-right-radius:inherit;background:linear-gradient(90deg,var(--purple),var(--indigo));opacity:.8}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+    .nav .brand{display:flex;align-items:center;gap:12px}
+    .nav .brand img{height:42px;width:auto}
+    .nav .actions{display:flex;gap:10px}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;font-weight:800;letter-spacing:.01em;border:1px solid transparent;transition:transform .16s ease, box-shadow .16s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn.primary{color:#fff;background:linear-gradient(90deg,var(--purple),var(--indigo));box-shadow:0 10px 24px rgba(99,102,241,.28)}
+    .btn.ghost{color:var(--ink);background:linear-gradient(#ffffff0f,#ffffff0a) padding-box, linear-gradient(90deg,var(--purple),var(--indigo)) border-box;border-color:transparent;border-image:linear-gradient(90deg,var(--purple),var(--indigo)) 1}
+
+    /* Hero */
+    .hero{margin-top:10px;padding:clamp(18px,4vw,28px)}
+    .headline{background:linear-gradient(90deg,#fff,rgba(255,255,255,.85));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+    .hero p{max-width:70ch}
+    .device{aspect-ratio:16/10;min-height:280px}
+    @media(min-width:960px){.device{aspect-ratio:16/9}}
+    .device iframe,.device video{position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:14px;object-fit:cover;opacity:.92}
+    .device .frame{position:absolute;inset:0;border-radius:14px;border:1px solid var(--line);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08), 0 10px 30px rgba(0,0,0,.35)}
+
+    /* Ambient websites (background stage) */
+    .ambient{position:relative;isolation:isolate}
+    .ambient-stage{position:absolute;inset:-60px 0 auto 0;height:420px;z-index:-1}
+    @media(min-width:960px){.ambient-stage{height:520px}}
+    .ambient-iframe{width:100%;height:100%;border:none;border-radius:22px;filter:blur(18px) saturate(.8) brightness(.85);opacity:.45;transform:scale(1.02);transform-origin:center;box-shadow:var(--shadow-2)}
+    .ambient-overlay{position:absolute;inset:0;border-radius:22px;border:1px solid var(--line);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+
+    .source-pills{display:flex;flex-wrap:wrap;gap:10px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer}
+    .pill:hover{border-color:rgba(255,255,255,.28)}
+
+    /* Cards */
+    .cards{display:grid;gap:16px}
+    @media(min-width:960px){.cards{grid-template-columns:repeat(3,1fr)}}
+    .card{padding:18px}
+
+    /* Footer */
+    footer{color:var(--muted);padding:20px 0;margin:40px 0}
+
+    /* Access */
+    :where(a,button,[role="button"]):focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:12px}
+    @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+  </style>
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="wrap">
+    <div class="nav glass stroke" style="padding:10px 14px;border-radius:14px;">
+      <div class="brand">
+        <img src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1755645414226x745256611565246800/ComplianceAide.png" alt="ComplianceAide logo"/>
+        <strong style="letter-spacing:.3px">ComplianceAide</strong>
+      </div>
+      <div class="actions">
+        <a class="btn ghost" href="#features">Features</a>
+        <a class="btn ghost" href="#ambient">Ambient</a>
+        <a class="btn primary" href="https://www.thecomplianceaide.com/accessrequest_original">Start Trial</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="wrap hero">
+    <div class="split">
+      <div class="glass keyline" style="padding:24px">
+        <div class="muted" style="font-size:12px;margin-bottom:6px">Glass • Ambient • Translucent</div>
+        <h1 class="headline">A glassy, living landing.
+          Compliance content, in motion.</h1>
+        <p class="muted" style="margin-top:10px">Transparent panels, soft depth, and an ambient background that can showcase trusted sites or media behind your content — while keeping copy crisp and readable.</p>
+        <div class="row" style="margin-top:16px">
+          <a class="btn primary" href="https://outlook.office365.com/book/TheComplianceAidecomDemoRequest@thecomplianceaide.com/?ismsaljsauthenabled=true" target="_blank" rel="noopener noreferrer">Book a 15‑min demo</a>
+          <a class="btn ghost" href="#ambient">See ambient stage</a>
+        </div>
+      </div>
+
+      <!-- Device / media preview (glass) -->
+      <div class="glass device" style="position:relative">
+        <video autoplay muted playsinline loop preload="metadata" style="position:absolute; inset:10px; width:calc(100% - 20px); height:calc(100% - 20px); border-radius:14px; object-fit:cover;">
+          <source src="https://5703ea7ceca3d5bd1ea9d21c261416f1.cdn.bubble.io/f1761858222026x641838712507266400/20251030_1703_01k8ven23bf1g8z9vjtpxn6jnd.mp4?_gl=1*9ub2k4*_gcl_au*MTkyNTA3OTgxNy4xNzU1MDk1MTE2*_ga*OTY1NzU2MzQzLjE3NTQ3ODM1MTE.*_ga_BFPVR2DEE2*czE3NjE4NTQyNDUkbzI0JGcxJHQxNzYxODU2NzM1JGozOSRsMCRoMA.." type="video/mp4">
+        </video>
+        <div class="frame" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ambient websites section -->
+  <section id="ambient" class="wrap ambient" style="margin-top:6px">
+    <div class="ambient-stage">
+      <!-- Note: Some sites block embedding via X-Frame-Options/CSP. Use sources that allow iframes. -->
+      <iframe id="ambientFrame" class="ambient-iframe" src="https://www.youtube.com/embed/knu34hXmpv8?rel=0&mute=1" title="Ambient background" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <div class="ambient-overlay" aria-hidden="true"></div>
+    </div>
+
+    <div class="glass stroke keyline" style="padding:18px">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0">Ambient background</h2>
+        <div class="source-pills" id="sources">
+          <button class="pill" data-src="https://www.youtube.com/embed/knu34hXmpv8?rel=0&mute=1"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/play-circle.svg" alt="yt" style="width:16px;height:16px"/>YouTube</button>
+          <button class="pill" data-src="https://thecomplianceaide.ghost.io/"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/globe.svg" alt="blog" style="width:16px;height:16px"/>Blog</button>
+          <button class="pill" data-src="https://developer.chrome.com/"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/layers.svg" alt="dev" style="width:16px;height:16px"/>Dev site</button>
+          <button class="pill" data-src="about:blank"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/slash.svg" alt="none" style="width:16px;height:16px"/>None</button>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:6px;font-size:13px">Tip: If a site doesn’t appear, it likely blocks iframing. Pick another source you trust.</p>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="wrap" style="margin-top:22px">
+    <div class="cards">
+      <div class="glass stroke card">
+        <div class="row" style="gap:10px"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield-check.svg" alt="shield" style="width:20px;height:20px"/><h3>Readable on glass</h3></div>
+        <p class="muted">Frosted layers with careful contrast so content stays crystal‑clear over motion.</p>
+      </div>
+      <div class="glass stroke card">
+        <div class="row" style="gap:10px"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/sparkles.svg" alt="sparkles" style="width:20px;height:20px"/><h3>Ambient but safe</h3></div>
+        <p class="muted">Background iframe stays blurred and dimmed; foreground panels remain fully accessible.</p>
+      </div>
+      <div class="glass stroke card">
+        <div class="row" style="gap:10px"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/rocket.svg" alt="rocket" style="width:20px;height:20px"/><h3>HTML‑only</h3></div>
+        <p class="muted">All inline — one file, easy to deploy, fast to iterate.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="wrap" style="margin-top:24px">
+    <div class="glass stroke keyline" style="padding:20px;display:grid;gap:14px;align-items:center">
+      <h2>Bring your content to life — safely.</h2>
+      <div class="row">
+        <a class="btn primary" href="https://www.thecomplianceaide.com/accessrequest_original">Start 7‑day trial</a>
+        <a class="btn ghost" href="https://outlook.office365.com/book/TheComplianceAidecomDemoRequest@thecomplianceaide.com/?ismsaljsauthenabled=true" target="_blank" rel="noopener noreferrer">Book a demo</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <p>© <span id="y"></span> ComplianceAide • Glass landing concept</p>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    // Ambient source switching (sites must allow iframing)
+    const frame = document.getElementById('ambientFrame');
+    document.getElementById('sources').addEventListener('click', function(e){
+      const btn = e.target.closest('[data-src]');
+      if(!btn) return;
+      frame.src = btn.getAttribute('data-src');
+    });
+  </script>
+</body>
+</html>
+
